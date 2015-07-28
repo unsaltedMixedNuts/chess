@@ -9,6 +9,47 @@ class Board
     populate_board
   end
 
+  def [](pos)
+    raise 'invalid position' unless valid_pos?(pos)
+    row, col = pos
+    @board[row][col]
+  end
+
+  def []=(pos, piece)
+    raise 'invalid position' unless valid_pos?(pos)
+    row, col = pos
+    @board[row][col] = piece
+  end
+
+  def empty?(pos)
+    self[pos].nil?
+  end
+
+  def move(current_color, start_pos, end_pos)
+    raise 'start position is empty' if empty?(start_pos)
+
+    piece = self[start_pos]
+
+    if piece.color != current_color
+      raise "invalid move; must move #{current_color}'s piece this turn"
+    elsif !piece.moves.include?(to_pos)
+      raise "invalid move; piece can't move that way"
+    elsif !piece.valid_moves.include?(end_pos)
+      raise "invalid move; cannot move into check"
+    end
+
+    move!(start_pos, end_pos)
+  end
+
+  def move!(start_pos, end_pos)
+    piece = self[start_pos]
+
+    self[start_pos] = piece
+    self[end_pos] = nil
+    piece.pos = end_pos
+    piece.first_move = false if piece.class == Pawn
+  end
+
   def pieces_on_board
     @board.flatten.compact
   end

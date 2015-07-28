@@ -1,7 +1,7 @@
 class Piece
 
   attr_accessor :pos
-  
+
   COLORS = [:white, :black]
 
   def initialize(color, board, pos)
@@ -24,10 +24,11 @@ class Piece
   end
 
   def valid_moves
-
+    moves.reject { |pos| move_into_check?(pos) }
   end
 
   def move_into_check?(to_pos)
+    
   end
 
 end
