@@ -1,5 +1,5 @@
 class Piece
-
+  attr_reader :board, :color
   attr_accessor :pos
 
   COLORS = [:white, :black]
@@ -27,8 +27,10 @@ class Piece
     moves.reject { |pos| move_into_check?(pos) }
   end
 
-  def move_into_check?(to_pos)
-    
+  def move_into_check?(end_pos)
+    board_clone = board.dup
+    board_clone.move_piece!(pos, end_pos)
+    board_clone.in_check?(color)
   end
 
 end

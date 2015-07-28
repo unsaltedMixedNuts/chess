@@ -5,8 +5,8 @@ class Board
   WHITE_PAWN_ROW = 1
   WHITE_NON_PAWN_ROW = 0
 
-  def initialize
-    populate_board
+  def initialize(setup_board = true)
+    populate_board if setup_board
   end
 
   def [](pos)
@@ -68,6 +68,16 @@ class Board
     end
 
     raise 'king peice not found on board'
+  end
+
+  def dup
+    duplicate = Board.new(false)
+
+    pieces_on_board.each do |piece|
+      piece.class.new(piece.color, duplicate, piece.pos)
+    end
+
+    duplicate
   end
 
   def populate_board
