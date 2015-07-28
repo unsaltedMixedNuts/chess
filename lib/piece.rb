@@ -1,6 +1,13 @@
 class Piece
 
+  attr_accessor :pos
+  
+  COLORS = [:white, :black]
+
   def initialize(color, board, pos)
+    raise 'invalid color' unless COLORS.include(color)
+    raise 'invalid position' unless board.valid_pos?(pos)
+
     @color, @board, @pos = color, board, pos
   end
 
