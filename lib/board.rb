@@ -47,7 +47,6 @@ class Board
     self[start_pos] = piece
     self[end_pos] = nil
     piece.pos = end_pos
-    piece.first_move = false if piece.class == Pawn
   end
 
   def pieces_on_board
