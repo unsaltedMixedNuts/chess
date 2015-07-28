@@ -62,6 +62,14 @@ class Board
     end
   end
 
+  def checkmate?(color)
+    return false unless in_check(color?)
+
+    pieces.select { |piece| piece.color == color}.all? do |piece|
+      piece.valid_moves.empty?
+    end
+  end
+
   def get_king_pos(color)
     pieces_on_board.each do |piece|
       return piece.pos if piece.color == color && piece.class('King')
