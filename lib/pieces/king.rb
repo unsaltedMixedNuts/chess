@@ -1,3 +1,6 @@
+require_relative 'piece'
+require_relative 'stepping_pieces'
+
 class King < SteppingPieces
 
   def display_images

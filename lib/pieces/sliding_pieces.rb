@@ -19,7 +19,7 @@ class SlidingPiece < Piece
     loop do
       cur_x += dir_x
       cur_y += dir_y
-      pos = (cur_x, cur_y)
+      pos = [cur_x, cur_y]
 
       break unless board.valid_pos(pos)
 

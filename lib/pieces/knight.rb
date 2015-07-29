@@ -1,3 +1,6 @@
+require_relative 'piece'
+require_relative 'stepping_pieces'
+
 class Knight < SteppingPieces
 
   def display_images
