@@ -24,8 +24,17 @@ class Board
     @board[row][col] = piece
   end
 
+  def add_piece_to_board(piece, pos)
+  raise 'position not empty' unless empty?(pos)
+  self[pos] = piece
+end
+
   def empty?(pos)
     self[pos].nil?
+  end
+
+  def valid_pos?(pos)
+    pos.all? { |coord| coord.between?(0, 7) }
   end
 
   def move(current_color, start_pos, end_pos)
@@ -35,7 +44,7 @@ class Board
 
     if piece.color != current_color
       raise "invalid move; must move #{current_color}'s piece this turn"
-    elsif !piece.moves.include?(to_pos)
+    elsif !piece.moves.include?(end_pos)
       raise "invalid move; piece can't move that way"
     elsif !piece.valid_moves.include?(end_pos)
       raise "invalid move; cannot move into check"
@@ -60,12 +69,12 @@ class Board
     king_pos = get_king_pos(color)
 
     pieces_on_board.any? do |piece|
-      piece.color != color && piece.moves.include(king_pos)
+      piece.color != color && piece.moves.include?(king_pos)
     end
   end
 
   def checkmate?(color)
-    return false unless in_check(color?)
+    return false unless in_check?(color)
 
     pieces.select { |piece| piece.color == color}.all? do |piece|
       piece.valid_moves.empty?
@@ -74,7 +83,7 @@ class Board
 
   def get_king_pos(color)
     pieces_on_board.each do |piece|
-      return piece.pos if piece.color == color && piece.class('King')
+      return piece.pos if piece.color == color && piece.is_a?(King)
     end
 
     raise 'king peice not found on board'
@@ -103,7 +112,7 @@ class Board
 
   def insert_pawns(color)
     row_idx = color == :black ? BLACK_PAWN_ROW : WHITE_PAWN_ROW
-    BOARD_DIMENSIONS.times { |col_idx| Pawn.new(color, self, [row_idx, col_idx]) }
+    BOARD_DIMENSIONS.times { |col_idx| Pawn.new(color, self, [col_idx, row_idx]) }
   end
 
   def insert_non_pawns(color)
@@ -111,20 +120,20 @@ class Board
     row_idx = color == :black ? BLACK_NON_PAWN_ROW : WHITE_NON_PAWN_ROW
 
     pieces.each_with_index do |peice_class, col_idx|
-      peice_class.new(color, self, [row_idx, col_idx])
+      peice_class.new(color, self, [col_idx, row_idx])
     end
   end
 
   def render_board
-    letters = "  A B C D E F G H"
+    letters = "   A B C D E F G H"
     rendering = "\n--- Chess by Mel ---"
     rendering << "\n" + letters.dup
-    descending_nums = (1..Board::DIMENSIONS).to_a.reverse
+    descending_nums = (1..BOARD_DIMENSIONS).to_a.reverse
     descending_nums.each do |col|
       rendering << "\n#{col} "
 
-      Board::DIMENSIONS.times do |row|
-        spot_render = self[[row, col - 1]].nil? ? "  " : " #{self[[row, col - 1]].display_image}"
+      BOARD_DIMENSIONS.times do |row|
+        spot_render = self[[row, col - 1]].nil? ? "  " : " #{self[[row, col - 1]].render}"
         color = (row + col - 1).even? ? :on_cyan : :on_light_white
 
         rendering << spot_render.send(color)

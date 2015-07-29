@@ -21,7 +21,7 @@ class SlidingPiece < Piece
       cur_y += dir_y
       pos = [cur_x, cur_y]
 
-      break unless board.valid_pos(pos)
+      break unless board.valid_pos?(pos)
 
       if board.empty?(pos)
         moves << pos

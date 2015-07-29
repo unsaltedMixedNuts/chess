@@ -1,4 +1,5 @@
 require_relative 'board'
+require 'byebug'
 
 class Game
   attr_reader :board, :current_player, :players
@@ -29,7 +30,7 @@ end
 
 class HumanPlayer
   VALID_COL_INPUTS = %w(A B C D E F G H)
-  VALID_ROW_INPUTS = %w(1 2 3 4 5 6 7 8)
+  VALID_ROW_INPUTS = [1, 2, 3, 4, 5, 6 ,7, 8]
   attr_reader :color
 
   def initialize(color)
@@ -42,20 +43,25 @@ class HumanPlayer
     puts "Please input the start and end positions of your move (e.g. 'F2, F3')."
 
     puts "Enter start position (e.g. 'F2')."
+    # debugger
     start_pos = sanitize_user_input(gets.chomp)
+    puts "\nStart position is #{start_pos}.\nPiece at that spot is #{board[start_pos]} and color is #{board[start_pos].color}\n"
+    puts "Moves are #{board[start_pos].moves}\n"
 
     puts "Enter end position (e.g. 'F3')."
     end_pos = sanitize_user_input(gets.chomp)
+    puts "\nEnd position is #{end_pos}.\n"
 
     board.move(color, start_pos, end_pos)
 
-    rescue StandardError => e
-      puts "Error: #{e.message}"
-      retry
+    # rescue StandardError => e
+    #   puts "Error: #{e.message}"
+    #   retry
   end
 
   def sanitize_user_input(input)
-    unless VALID_COL_INPUTS.include?(input[0]) && VALID_ROW_INPUTS.include?(input[1])
+    input[0] = input[0].upcase
+    unless VALID_COL_INPUTS.include?(input[0]) && VALID_ROW_INPUTS.include?(input[1].to_i)
       raise "Invalid input! Try again."
     end
 
@@ -63,7 +69,7 @@ class HumanPlayer
   end
 
   def translate(input)
-    [VALID_COL_INPUTS.index(input[0]), input[1].to_i]
+    [VALID_COL_INPUTS.index(input[0]), input[1].to_i - 1]
   end
 end
 

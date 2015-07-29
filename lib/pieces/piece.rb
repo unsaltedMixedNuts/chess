@@ -5,10 +5,11 @@ class Piece
   COLORS = [:white, :black]
 
   def initialize(color, board, pos)
-    raise 'invalid color' unless COLORS.include(color)
+    raise 'invalid color' unless COLORS.include?(color)
     raise 'invalid position' unless board.valid_pos?(pos)
 
     @color, @board, @pos = color, board, pos
+    board.add_piece_to_board(self, pos)
   end
 
   def render
