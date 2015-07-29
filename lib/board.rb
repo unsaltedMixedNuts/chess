@@ -1,3 +1,5 @@
+require 'colorize'
+
 class Board
   BOARD_DIMENSIONS = 8
   BLACK_PAWN_ROW = 6
@@ -110,6 +112,29 @@ class Board
     pieces.each_with_index do |peice_class, col_idx|
       peice_class.new(color, self, [row_idx, col_idx])
     end
+  end
+
+  def render_board
+    letters = "  A B C D E F G H"
+    rendering = "\n--- Chess by Mel ---"
+    rendering << "\n" + letters.dup
+    descending_nums = (1..Board::DIMENSIONS).to_a.reverse
+    descending_nums.each do |col|
+      rendering << "\n#{col} "
+
+      Board::DIMENSIONS.times do |row|
+        spot_render = self[[row, col - 1]].nil? ? "  " : " #{self[[row, col - 1]].display_image}"
+        color = (row + col - 1).even? ? :on_cyan : :on_light_white
+
+        rendering << spot_render.send(color)
+
+      end
+      rendering << " #{col}"
+
+    end
+    rendering << "\n" + letters
+
+    puts rendering
   end
 
 end
