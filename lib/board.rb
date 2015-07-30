@@ -136,7 +136,7 @@ class Board
 
   def render_board
     letters = "   A B C D E F G H"
-    rendering = "\n\n\n--- Chess by Mel ---"
+    rendering = "--- Chess by Mel ---"
     rendering << "\n" + letters.dup
     descending_nums = (1..BOARD_DIMENSIONS).to_a.reverse
 

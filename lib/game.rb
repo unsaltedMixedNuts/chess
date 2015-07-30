@@ -61,7 +61,7 @@ class HumanPlayer
 
     board.move(color, start_pos, end_pos)
 
-    print "Successfully moved #{board[end_pos].class.to_s.downcase}"
+    print "\nSuccessfully moved #{board[end_pos].class.to_s.downcase}"
       .colorize(*Board::SUCCESS_FORMATTING)
     puts " from #{start_input} to #{end_input}."
       .colorize(*Board::SUCCESS_FORMATTING)
