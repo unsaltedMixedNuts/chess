@@ -13,5 +13,5 @@ Here is my very own object-oriented chess game!  It's a lot of fun if I do say s
   - Run `$ bundle install` to install included gems.
   - Navigate to the `lib` folder and enter the following command in your terminal
     - `$ ruby game.rb`
-  - Zoom in the Terminal view by pressing ('Command (⌘)-Plus Sign (+)') on Mac.
+  - Enlarge the Terminal view by pressing `Command (⌘)-Plus Sign (+)` on Mac.
   - Enjoy!
