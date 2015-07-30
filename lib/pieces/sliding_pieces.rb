@@ -33,5 +33,4 @@ class SlidingPiece < Piece
 
     moves
   end
-
 end

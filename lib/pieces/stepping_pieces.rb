@@ -14,5 +14,4 @@ class SteppingPieces < Piece
       end
     end
   end
-
 end
