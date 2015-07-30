@@ -9,7 +9,7 @@ Here is my very own object-oriented chess game!  It's a lot of fun if I do say s
 
 ### How To Play:
   - Clone this repository locally on your machine.
-  - Open Terminal and change directory to the cloned repesitory (default name 'chess').
+  - Open Terminal and change directory to the cloned repository (default name 'chess').
   - Run `$ bundle install` to install included gems.
   - Navigate to the `lib` folder and enter the following command in your terminal
     - `$ ruby game.rb`
