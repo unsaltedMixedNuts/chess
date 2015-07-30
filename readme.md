@@ -7,7 +7,7 @@ Here is my very own object-oriented chess game!  It's a lot of fun if I do say s
   - Exception handling and helper methods to handle bad user input
   - Use of Unicode and Colorize for a jazzed up user interface.
 
-### How to play:
+### How To Play:
   - Clone this repository locally on your machine.
   - Open Terminal and change directory to the cloned repesitory (default name 'chess').
   - Run `$ bundle install` to install included gems.
