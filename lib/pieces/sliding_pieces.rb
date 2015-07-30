@@ -26,7 +26,7 @@ class SlidingPiece < Piece
       if board.empty?(pos)
         moves << pos
       else
-        moves << pos unless board[pos] == color
+        moves << pos unless board[pos].color == color
         break
       end
     end

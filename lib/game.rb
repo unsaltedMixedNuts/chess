@@ -1,3 +1,4 @@
+require 'colorize'
 require_relative 'board'
 require 'byebug'
 
@@ -15,14 +16,18 @@ class Game
   end
 
   def play
+    move_count = 0
     loop do
-      break if board.checkmate?(current_player)
+      break if move_count > 3 && board.checkmate?(current_player)
       players[current_player].play_turn(board)
       @current_player = (current_player == :white) ? :black : :white
+      move_count += 1
     end
 
     puts board.render_board
-    puts "Game over. #{current_player}.capitalize has been checkmated.  Nice game."
+    puts "Nice game!"
+    puts"#{current_player.capitalize} has been checkmated."
+    puts"#{[:white, :black].reject{ |color| color == current_player }.join.capitalize} wins!\n\n\n"
     nil
   end
 
@@ -39,37 +44,39 @@ class HumanPlayer
 
   def play_turn(board)
     puts board.render_board
-    puts "Current player: #{color.capitalize}"
-    puts "Please input the start and end positions of your move (e.g. 'F2, F3')."
+    font_color = color == :white ? :light_white : :black
+    background = color == :white ? :black : :light_white
+    print "Current player: ".colorize(:red)
+    puts " #{color.capitalize} ".colorize(color: font_color, background: background)
 
-    puts "Enter start position (e.g. 'F2')."
+    puts "Enter start position of your move (e.g. 'F2').".colorize(:red)
     # debugger
     start_pos = sanitize_user_input(gets.chomp)
-    puts "\nStart position is #{start_pos}.\nPiece at that spot is #{board[start_pos]} and color is #{board[start_pos].color}\n"
-    puts "Moves are #{board[start_pos].moves}\n"
+    # puts "\nStart position is #{start_pos}.\nPiece at that spot is #{board[start_pos]} and color is #{board[start_pos].color}\n"
+    # puts "Moves are #{board[start_pos].moves}\n"
 
-    puts "Enter end position (e.g. 'F3')."
+    puts "Enter end position of your move (e.g. 'F3').".colorize(:red)
     end_pos = sanitize_user_input(gets.chomp)
-    puts "\nEnd position is #{end_pos}.\n"
+    # puts "\nEnd position is #{end_pos}.\n"
 
     board.move(color, start_pos, end_pos)
 
-    # rescue StandardError => e
-    #   puts "Error: #{e.message}"
-    #   retry
+    rescue StandardError => e
+      puts "Error: #{e.message}"
+      retry
   end
 
   def sanitize_user_input(input)
     input[0] = input[0].upcase
     unless VALID_COL_INPUTS.include?(input[0]) && VALID_ROW_INPUTS.include?(input[1].to_i)
-      raise "Invalid input! Try again."
+      raise "Invalid input! Try again.".colorize(background: :light_red)
     end
 
     translate(input)
   end
 
   def translate(input)
-    [VALID_COL_INPUTS.index(input[0]), input[1].to_i - 1]
+    [input[1].to_i - 1, VALID_COL_INPUTS.index(input[0])]
   end
 end
 
