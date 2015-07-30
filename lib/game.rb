@@ -86,7 +86,7 @@ class HumanPlayer
   end
 
   def get_user_start_pos(board)
-    start_input = (gets.chomp)
+    start_input = gets.chomp[0..1]
     start_pos = sanitize_user_input(start_input)
 
     if board.empty?(start_pos)
@@ -106,7 +106,7 @@ class HumanPlayer
     puts"#{board[start_pos].class.to_s.downcase} (e.g. 'F3')."
       .colorize(*Board::INSTRUCTION_FORMATTING)
 
-    end_input = gets.chomp
+    end_input = gets.chomp[0..1]
     end_pos = sanitize_user_input(end_input)
 
     [end_input, end_pos]

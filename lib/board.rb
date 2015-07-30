@@ -18,6 +18,16 @@ class Board
     populate_board if setup_board
   end
 
+  #Call Board#custom_board inside of Board#initialize instead of calling...
+  #...Board#populate_board in order to simulate a specific board configuration.
+  def custom_board
+    # Input custom board and piece configuration inside this method for simulation.
+    Bishop.new(:black, self, [1, 5])
+    Bishop.new(:black, self, [2, 5])
+    King.new(:black, self, [3, 6])
+    King.new(:white, self, [1, 7])
+  end
+
   def populate_board
     Piece::COLORS.each do |color|
       insert_pawns(color)
@@ -96,8 +106,9 @@ class Board
   end
 
   def checkmate?(color)
-    return false unless in_check?(color)
-
+    #Must check for checkmate even if no player is currently in check because...
+    #towards end of a game a player can have no valid moves that will not put...
+    #himself in check.
     pieces_on_board.select { |piece| piece.color == color}.all? do |piece|
       piece.valid_moves.empty?
     end
