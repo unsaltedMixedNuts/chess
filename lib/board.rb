@@ -116,12 +116,12 @@ class Board
 
 
   def render_board
-    # -----DEBUGGING LABELS -----
-    letters = "   0 1 2 3 4 5 6 7"
-    # -----DEBUGGING LABELS -----
+    # # -----DEBUGGING LABELS -----
+    # letters = "   0 1 2 3 4 5 6 7"
+    # # -----DEBUGGING LABELS -----
 
     # -----NORMAL LABELS -----
-    # letters = "   A B C D E F G H"
+    letters = "   A B C D E F G H"
     # -----NORMAL LABELS -----
 
     rendering = "\n\n\n--- Chess by Mel ---"
@@ -129,12 +129,12 @@ class Board
     descending_nums = (1..BOARD_DIMENSIONS).to_a.reverse
     descending_nums.each do |col|
 
-      # -----DEBUGGING LABELS -----
-      rendering << "\n#{col-1} "
-      # -----DEBUGGING LABELS -----
+      # # -----DEBUGGING LABELS -----
+      # rendering << "\n#{col-1} "
+      # # -----DEBUGGING LABELS -----
 
       # -----NORMAL LABELS -----
-      # rendering << "\n#{col} "
+      rendering << "\n#{col} "
       # -----NORMAL LABELS -----
 
       BOARD_DIMENSIONS.times do |row|
@@ -145,22 +145,23 @@ class Board
 
       end
 
-      # -----DEBUGGING LABELS -----
-      rendering << " #{col}"
-      # -----DEBUGGING LABELS -----
+      # # -----DEBUGGING LABELS -----
+      # rendering << " #{col}"
+      # # -----DEBUGGING LABELS -----
 
       # -----NORMAL LABELS -----
-      # rendering << " #{col}"
+      rendering << " #{col}"
       # -----NORMAL LABELS -----
 
     end
+    # # -----DEBUGGING LABELS -----
+    # rendering << "\n" + "   A B C D E F G H"
+    # # -----DEBUGGING LABELS -----
+
     # -----NORMAL LABELS -----
-    # rendering << "\n" + letters
+    rendering << "\n" + letters
     # -----NORMAL LABELS -----
 
-    # -----DEBUGGING LABELS -----
-    rendering << "\n" + "   A B C D E F G H"
-    # -----DEBUGGING LABELS -----
 
     puts rendering
     # debugger
